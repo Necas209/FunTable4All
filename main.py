@@ -1,10 +1,5 @@
-import kivy
-from kivy.uix.widget import Widget
-
-kivy.require('1.0.9')
-
-
 from kivy.app import App
+from kivy.uix.widget import Widget
 
 
 class StartPage(Widget):

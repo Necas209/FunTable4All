@@ -1,13 +1,33 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import Gradient kivy_gradient.Gradient
+
 <StartPage>:
     canvas:
-        Color:
-            rgb: (77/255, 215/255, 250/255)
         Rectangle:
             pos: self.pos
-            size: self.size
-    Button:
-        center: self.parent.center
+            size: self.size # (600, 800)
+            texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
+    Image:
+        source: 'images/logo.png'
+        size: (403, 93)
+        x: (root.width - self.width) / 2
+        y: 600
+    Image:
+        source: 'images/start_img.png'
+        size: (300, 300)
+        x: (root.width - self.width) / 2
+        y: 300
+    MDFillRoundFlatIconButton:
+        icon: 'play-circle-outline'
+        icon_size: 50
+        icon_color: get_color_from_hex('72bb53')
+        md_bg_color: 1, 1, 1, 1
+        x: (root.width - self.width) / 2
+        y: 150
         text: 'Iniciar'
-        font_size: 30
-        background_normal: ''
-        color: (114/255, 187/255, 83/255, 1)
+        text_color: get_color_from_hex('72bb53')
+        font_name: 'Comic Neue'
+        bold: True
+        font_size: 50
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')

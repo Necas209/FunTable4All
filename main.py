@@ -9,7 +9,7 @@ class StartScreen(Screen):
         super().__init__(**kwargs)
 
     def on_pre_enter(self, *args):
-        Window.size = (700, 800)
+        Window.size = (600, 800)
 
     def bt_start(self):
         self.manager.current = 'menu_sc'
@@ -20,6 +20,8 @@ class MenuScreen(Screen):
         super().__init__(**kwargs)
 
     def bt_play(self):
+        games_sc = GamesScreen(name='games_sc')
+        self.manager.add_widget(games_sc)
         self.manager.current = 'games_sc'
 
 
@@ -33,10 +35,8 @@ class GameApp(MDApp):
         sm = ScreenManager()
         start_sc = StartScreen(name='start_sc')
         menu_sc = MenuScreen(name='menu_sc')
-        games_sc = GamesScreen(name='games_sc')
         sm.add_widget(start_sc)
         sm.add_widget(menu_sc)
-        sm.add_widget(games_sc)
         return sm
 
 

@@ -6,7 +6,7 @@
     canvas:
         Rectangle:
             pos: self.pos
-            size: self.size # (600, 800)
+            size: self.size
             texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
     Image:
         source: 'images/logo.png'
@@ -29,11 +29,12 @@
         font_size: '40dp'
         line_width: 3
         line_color: get_color_from_hex('0d47a1')
+
 <MenuScreen>:
     canvas:
         Rectangle:
             pos: self.pos
-            size: self.size # (600, 800)
+            size: self.size
             texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
     Image:
         source: 'images/logo.png'
@@ -53,6 +54,7 @@
         line_width: 3
         line_color: get_color_from_hex('0d47a1')
     MDFillRoundFlatIconButton:
+        disabled: True
         icon: 'cog'
         icon_color: get_color_from_hex('d68227')
         md_bg_color: 1, 1, 1, 1
@@ -77,3 +79,50 @@
         font_size: '35dp'
         line_width: 3
         line_color: get_color_from_hex('0d47a1')
+
+<GamesScreen>:
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
+    Image:
+        source: 'images/logo.png'
+        size_hint: (0.7, 0.7)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+    MDFillRoundFlatIconButton:
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.3, 'center_y': 0.60}
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+        size_hint: (0.3, 0.23)
+        Image:
+            source: 'images/numbers.png'
+    MDFillRoundFlatIconButton:
+        disabled: True
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.7, 'center_y': 0.60}
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+        size_hint: (0.3, 0.23)
+        Image:
+            source: 'images/letters.png'
+    MDFillRoundFlatIconButton:
+        disabled: True
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.3, 'center_y': 0.30}
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+        size_hint: (0.3, 0.23)
+        Image:
+            source: 'images/shapes.png'
+    MDFillRoundFlatIconButton:
+        disabled: True
+        disabled_color: get_color_from_hex('dcdcdc')
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.7, 'center_y': 0.30}
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+        size_hint: (0.3, 0.23)
+        Image:
+            source: 'images/fruits.png'

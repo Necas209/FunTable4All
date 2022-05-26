@@ -1,7 +1,8 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 #:import Gradient kivy_gradient.Gradient
+#:import Window kivy.core.window.Window
 
-<StartPage>:
+<StartScreen>:
     canvas:
         Rectangle:
             pos: self.pos
@@ -9,25 +10,70 @@
             texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
     Image:
         source: 'images/logo.png'
-        size: (403, 93)
-        x: (root.width - self.width) / 2
-        y: 600
+        size_hint: (0.7, 0.7)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
     Image:
         source: 'images/start_img.png'
-        size: (300, 300)
-        x: (root.width - self.width) / 2
-        y: 300
+        size_hint: (0.6, 0.6)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
     MDFillRoundFlatIconButton:
+        on_press: root.bt_start()
         icon: 'play-circle-outline'
-        icon_size: 50
         icon_color: get_color_from_hex('72bb53')
-        md_bg_color: 1, 1, 1, 1
-        x: (root.width - self.width) / 2
-        y: 150
+        md_bg_color: (1, 1, 1, 1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.25}
         text: 'Iniciar'
         text_color: get_color_from_hex('72bb53')
         font_name: 'Comic Neue'
         bold: True
-        font_size: 50
+        font_size: '40dp'
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+<MenuScreen>:
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size # (600, 800)
+            texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
+    Image:
+        source: 'images/logo.png'
+        size_hint: (0.7, 0.7)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+    MDFillRoundFlatIconButton:
+        on_press: root.bt_play()
+        icon: 'gamepad-variant'
+        icon_color: get_color_from_hex('629c44')
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+        text: 'Jogar'
+        text_color: get_color_from_hex('629c44')
+        font_name: 'Comic Neue'
+        bold: True
+        font_size: '35dp'
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+    MDFillRoundFlatIconButton:
+        icon: 'cog'
+        icon_color: get_color_from_hex('d68227')
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+        text: 'Opções'
+        text_color: get_color_from_hex('d68227')
+        font_name: 'Comic Neue'
+        bold: True
+        font_size: '35dp'
+        line_width: 3
+        line_color: get_color_from_hex('0d47a1')
+    MDFillRoundFlatIconButton:
+        on_press: app.stop()
+        icon: 'exit-run'
+        icon_color: get_color_from_hex('ff3823')
+        md_bg_color: 1, 1, 1, 1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+        text: 'Sair'
+        text_color: get_color_from_hex('ff3823')
+        font_name: 'Comic Neue'
+        bold: True
+        font_size: '35dp'
         line_width: 3
         line_color: get_color_from_hex('0d47a1')

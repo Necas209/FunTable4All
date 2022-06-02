@@ -107,19 +107,13 @@
 
 <PlayLayout@RelativeLayout>:
     pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-    size_hint: (0.8, 0.7)
+    size_hint: (0.8, 0.6)
     canvas:
         Color:
             rgba: get_color_from_hex('fef67f')
         RoundedRectangle:
             size: self.size
             radius: [(40, 40), (40, 40), (40, 40), (40, 40)]
-    MDIconButton:
-        icon: 'volume-high'
-        theme_text_color: 'Custom'
-        text_color: get_color_from_hex('e65100')
-        user_font_size: "40sp"
-        pos_hint: {'center_x': 0.1, 'center_y': 0.95}
 
 <RoundLabel@MDLabel>:
     color: get_color_from_hex('bb285c')
@@ -129,38 +123,27 @@
     font_size: '35dp'
     pos_hint: {'center_x': 0.45, 'center_y': 0.95}
 
-<RoundCard@MDCard>:
-    border_radius: 10
-    radius: [10,]
-    md_bg_color: 1, 1, 1, 1
-    line_color: get_color_from_hex('0d47a1')
-    size_hint: (0.4, 0.6)
-
-
 <PlayScreen>:
     PlayLayout:
         RoundLabel:
             text: f'{root.round_no} / {root.no_rounds}'
-        RoundCard:
-            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
+        MDCard:
+            border_radius: 10
+            radius: [10,]
+            md_bg_color: 1, 1, 1, 1
+            line_color: get_color_from_hex('0d47a1')
+            size_hint: (0.8, 0.6)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
             Image:
                 source: root.play_img
-        RoundCard:
-            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
-#            Camera:
-#                allow_stretch: True
-#                play: True
-#                index: 0
             MDIconButton:
+                pos_hint: {'center_x': 0.2, 'center_y': 0.2}
                 icon: 'check-circle'
                 on_press: root.bt_check_play(True)
             MDIconButton:
+                pos_hint: {'center_x': 0.8, 'center_y': 0.2}
                 icon: 'close-circle'
                 on_press: root.bt_check_play(False)
-        Image:
-            source: 'images/sand_clock.png'
-            size_hint: (0.2, 0.2)
-            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
 
 <ContinueButton@MDIconButton>:
     icon: 'chevron-right-circle'
@@ -172,14 +155,20 @@
     PlayLayout:
         RoundLabel:
             text: f'{root.round_no} / {root.no_rounds}'
-        RoundCard:
-            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
-            Image:
-                source: root.play_img
-        RoundCard:
-            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
-            Image:
-                source: 'images/right.png'
+        MDCard:
+            border_radius: 10
+            radius: [10,]
+            md_bg_color: 1, 1, 1, 1
+            line_color: get_color_from_hex('0d47a1')
+            size_hint: (0.8, 0.6)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+            RelativeLayout:
+                Image:
+                    source: 'images/right.png'
+                    size_hint: 0.4, 0.4
+                    pos_hint: {'center_x': 0.8, 'center_y': 0.75}
+                Image:
+                    source: root.play_img
         ContinueButton:
             on_press: root.bt_continue()
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
@@ -188,14 +177,20 @@
     PlayLayout:
         RoundLabel:
             text: f'{root.round_no} / {root.no_rounds}'
-        RoundCard:
-            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
-            Image:
-                source: root.play_img
-        RoundCard:
-            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
-            Image:
-                source: 'images/wrong.png'
+        MDCard:
+            border_radius: 10
+            radius: [10,]
+            md_bg_color: 1, 1, 1, 1
+            line_color: get_color_from_hex('0d47a1')
+            size_hint: (0.8, 0.6)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+            RelativeLayout:
+                Image:
+                    source: 'images/wrong.png'
+                    size_hint: 0.4, 0.4
+                    pos_hint: {'center_x': 0.8, 'center_y': 0.75}
+                Image:
+                    source: root.play_img
         MDIconButton:
             on_press: root.bt_redo()
             icon: 'redo'
@@ -220,24 +215,25 @@
             md_bg_color: 1, 1, 1, 1
             line_color: get_color_from_hex('0d47a1')
             size_hint: (0.8, 0.6)
-            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
-            MDLabel:
-                text: 'Parabéns!'
-                color: get_color_from_hex('1b5e20')
-                font_name: 'Comic Neue'
-                bold: True
-                font_size: '35dp'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-            Image:
-                source: 'images/win.png'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            MDLabel:
-                text: f'{root.score} / {root.no_rounds}'
-                color: get_color_from_hex('1b5e20')
-                font_name: 'Comic Neue'
-                bold: True
-                font_size: '35dp'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    text: 'Boa!'
+                    color: get_color_from_hex('1b5e20')
+                    font_name: 'Comic Neue'
+                    bold: True
+                    font_size: '35dp'
+                    halign: 'center'
+                Image:
+                    source: 'images/win.png'
+                MDLabel:
+                    text: f'{root.score} / {root.no_rounds}'
+                    color: get_color_from_hex('1b5e20')
+                    font_name: 'Comic Neue'
+                    bold: True
+                    font_size: '35dp'
+                    halign: 'center'
         MenuButton:
             on_press: root.bt_new_game()
             icon: 'gamepad-variant'

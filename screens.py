@@ -46,7 +46,7 @@ class PlayScreen(BaseScreen):
     play_img = StringProperty()
     score = NumericProperty(0)
     round_no = NumericProperty(1)
-    no_rounds = NumericProperty(5)
+    no_rounds = NumericProperty(1)
 
     def on_motion(self, etype: str, me: MotionEvent):
         print(me.type_id, me.profile)
@@ -64,6 +64,7 @@ class PlayScreen(BaseScreen):
             check_sc = WrongScreen(name=check_sc_name)
         self.manager.add_widget(check_sc)
         self.bind(play_img=self.manager.get_screen(check_sc_name).setter('play_img'))
+        self.property('play_img').dispatch(self)
         bind_screens(self, check_sc_name)
         self.manager.current = check_sc_name
 
@@ -106,11 +107,12 @@ class FinalScreen(BaseScreen):
     no_rounds = NumericProperty(5)
 
     def bt_new_game(self):
-        self.manager.clear_widgets()
+        sm = self.manager
+        sm.clear_widgets()
         start_sc = StartScreen(name='start_sc')
         menu_sc = MenuScreen(name='menu_sc')
         modes_sc = ModesScreen(name='modes_sc')
-        self.add_widget(start_sc)
-        self.add_widget(menu_sc)
-        self.add_widget(modes_sc)
-        self.manager.current = 'modes_sc'
+        sm.add_widget(start_sc)
+        sm.add_widget(menu_sc)
+        sm.add_widget(modes_sc)
+        sm.current = 'modes_sc'

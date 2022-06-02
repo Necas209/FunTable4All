@@ -1,42 +1,27 @@
+from kivy import Config
 from kivy.core.text import LabelBase
-from kivy.core.window import Window
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.input.providers.tuio import TuioMotionEventProvider
+from kivy.properties import NumericProperty
+from kivy.uix.screenmanager import ScreenManager
 from kivymd.app import MDApp
 
-
-class StartScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def on_pre_enter(self, *args):
-        Window.size = (600, 800)
-
-    def bt_start(self):
-        self.manager.current = 'menu_sc'
-
-
-class MenuScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def bt_play(self):
-        games_sc = GamesScreen(name='games_sc')
-        self.manager.add_widget(games_sc)
-        self.manager.current = 'games_sc'
-
-
-class GamesScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+from screens import StartScreen, MenuScreen, ModesScreen
 
 
 class GameApp(MDApp):
+    no_rounds = NumericProperty(5)
+    score = NumericProperty(0)
+
     def build(self):
+        Config.set('input', 'fun_table', 'tuio,127.0.0.1:3333')
+        self.icon = 'images/app_logo.png'
         sm = ScreenManager()
         start_sc = StartScreen(name='start_sc')
         menu_sc = MenuScreen(name='menu_sc')
+        modes_sc = ModesScreen(name='modes_sc')
         sm.add_widget(start_sc)
         sm.add_widget(menu_sc)
+        sm.add_widget(modes_sc)
         return sm
 
 

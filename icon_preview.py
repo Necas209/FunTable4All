@@ -10,7 +10,7 @@ from kivymd.uix.list import OneLineIconListItem
 Builder.load_string(
     '''
 #:import images_path kivymd.images_path
-
+#:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <CustomOneLineIconListItem>
 
@@ -30,6 +30,8 @@ Builder.load_string(
 
             MDIconButton:
                 icon: 'magnify'
+                theme_icon_color: 'Custom'
+                icon_color: get_color_from_hex('e65100')
 
             MDTextField:
                 id: search_field

@@ -2,7 +2,8 @@
 #:import Gradient kivy_gradient.Gradient
 #:import Window kivy.core.window.Window
 
-<StartScreen>:
+<BaseScreen>:
+    on_pre_enter: Window.size = (600, 800)
     canvas:
         Rectangle:
             pos: self.pos
@@ -11,7 +12,16 @@
     Image:
         source: 'images/logo.png'
         size_hint: (0.7, 0.7)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+
+<GoBackScreen>:
+    MDIconButton:
+        on_press: root.go_back()
+        icon: 'arrow-left-circle'
+        user_font_size: "40sp"
+        pos_hint: {'center_x': 0.1, 'center_y': 0.95}
+
+<StartScreen>:
     Image:
         source: 'images/start_img.png'
         size_hint: (0.6, 0.6)
@@ -26,103 +36,213 @@
         text_color: get_color_from_hex('72bb53')
         font_name: 'Comic Neue'
         bold: True
-        font_size: '40dp'
+        font_size: '35dp'
         line_width: 3
         line_color: get_color_from_hex('0d47a1')
 
+<MenuButton@MDFillRoundFlatIconButton>:
+    font_name: 'Comic Neue'
+    bold: True
+    font_size: '35dp'
+    line_color: get_color_from_hex('0d47a1')
+    md_bg_color: 1, 1, 1, 1
+
 <MenuScreen>:
-    canvas:
-        Rectangle:
-            pos: self.pos
-            size: self.size
-            texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
-    Image:
-        source: 'images/logo.png'
-        size_hint: (0.7, 0.7)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-    MDFillRoundFlatIconButton:
+    MenuButton:
         on_press: root.bt_play()
         icon: 'gamepad-variant'
         icon_color: get_color_from_hex('629c44')
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.5, 'center_y': 0.65}
         text: 'Jogar'
         text_color: get_color_from_hex('629c44')
-        font_name: 'Comic Neue'
-        bold: True
-        font_size: '35dp'
         line_width: 3
-        line_color: get_color_from_hex('0d47a1')
-    MDFillRoundFlatIconButton:
+    MenuButton:
         disabled: True
         icon: 'cog'
         icon_color: get_color_from_hex('d68227')
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.5, 'center_y': 0.45}
         text: 'Opções'
         text_color: get_color_from_hex('d68227')
-        font_name: 'Comic Neue'
-        bold: True
-        font_size: '35dp'
         line_width: 3
-        line_color: get_color_from_hex('0d47a1')
-    MDFillRoundFlatIconButton:
+    MenuButton:
         on_press: app.stop()
         icon: 'exit-run'
         icon_color: get_color_from_hex('ff3823')
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.5, 'center_y': 0.25}
         text: 'Sair'
         text_color: get_color_from_hex('ff3823')
-        font_name: 'Comic Neue'
-        bold: True
-        font_size: '35dp'
         line_width: 3
-        line_color: get_color_from_hex('0d47a1')
 
-<GamesScreen>:
-    canvas:
-        Rectangle:
-            pos: self.pos
-            size: self.size
-            texture: Gradient.vertical(get_color_from_hex('b0edfd'), get_color_from_hex('4dd7fa'))
-    Image:
-        source: 'images/logo.png'
-        size_hint: (0.7, 0.7)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-    MDFillRoundFlatIconButton:
-        md_bg_color: 1, 1, 1, 1
+<ModeButton@MDFillRoundFlatButton>:
+    md_bg_color: 1, 1, 1, 1
+    line_width: 3
+    line_color: get_color_from_hex('0d47a1')
+
+<ModesScreen>:
+    ModeButton:
+        on_press: root.bt_numbers()
         pos_hint: {'center_x': 0.3, 'center_y': 0.60}
-        line_width: 3
-        line_color: get_color_from_hex('0d47a1')
         size_hint: (0.3, 0.23)
         Image:
-            source: 'images/numbers.png'
-    MDFillRoundFlatIconButton:
+            source: 'images/modes/numbers.png'
+    ModeButton:
         disabled: True
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.7, 'center_y': 0.60}
-        line_width: 3
-        line_color: get_color_from_hex('0d47a1')
         size_hint: (0.3, 0.23)
         Image:
-            source: 'images/letters.png'
-    MDFillRoundFlatIconButton:
+            source: 'images/modes/letters.png'
+    ModeButton:
         disabled: True
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.3, 'center_y': 0.30}
-        line_width: 3
-        line_color: get_color_from_hex('0d47a1')
         size_hint: (0.3, 0.23)
         Image:
-            source: 'images/shapes.png'
-    MDFillRoundFlatIconButton:
+            source: 'images/modes/shapes.png'
+    ModeButton:
         disabled: True
         disabled_color: get_color_from_hex('dcdcdc')
-        md_bg_color: 1, 1, 1, 1
         pos_hint: {'center_x': 0.7, 'center_y': 0.30}
-        line_width: 3
-        line_color: get_color_from_hex('0d47a1')
         size_hint: (0.3, 0.23)
         Image:
-            source: 'images/fruits.png'
+            source: 'images/modes/fruits.png'
+
+<PlayLayout@RelativeLayout>:
+    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+    size_hint: (0.8, 0.7)
+    canvas:
+        Color:
+            rgba: get_color_from_hex('fef67f')
+        RoundedRectangle:
+            size: self.size
+            radius: [(40, 40), (40, 40), (40, 40), (40, 40)]
+    MDIconButton:
+        icon: 'volume-high'
+        theme_text_color: 'Custom'
+        text_color: get_color_from_hex('e65100')
+        user_font_size: "40sp"
+        pos_hint: {'center_x': 0.1, 'center_y': 0.95}
+
+<RoundLabel@MDLabel>:
+    color: get_color_from_hex('bb285c')
+    font_name: 'Comic Neue'
+    bold: True
+    halign: 'right'
+    font_size: '35dp'
+    pos_hint: {'center_x': 0.45, 'center_y': 0.95}
+
+<RoundCard@MDCard>:
+    border_radius: 10
+    radius: [10,]
+    md_bg_color: 1, 1, 1, 1
+    line_color: get_color_from_hex('0d47a1')
+    size_hint: (0.4, 0.6)
+
+
+<PlayScreen>:
+    PlayLayout:
+        RoundLabel:
+            text: f'{root.round_no} / {root.no_rounds}'
+        RoundCard:
+            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
+            Image:
+                source: root.play_img
+        RoundCard:
+            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
+#            Camera:
+#                allow_stretch: True
+#                play: True
+#                index: 0
+            MDIconButton:
+                icon: 'check-circle'
+                on_press: root.bt_check_play(True)
+            MDIconButton:
+                icon: 'close-circle'
+                on_press: root.bt_check_play(False)
+        Image:
+            source: 'images/sand_clock.png'
+            size_hint: (0.2, 0.2)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+
+<ContinueButton@MDIconButton>:
+    icon: 'chevron-right-circle'
+    theme_text_color: 'Custom'
+    text_color: get_color_from_hex('e65100')
+    user_font_size: '50sp'
+
+<RightScreen>:
+    PlayLayout:
+        RoundLabel:
+            text: f'{root.round_no} / {root.no_rounds}'
+        RoundCard:
+            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
+            Image:
+                source: root.play_img
+        RoundCard:
+            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
+            Image:
+                source: 'images/right.png'
+        ContinueButton:
+            on_press: root.bt_continue()
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+
+<WrongScreen>:
+    PlayLayout:
+        RoundLabel:
+            text: f'{root.round_no} / {root.no_rounds}'
+        RoundCard:
+            pos_hint: {'center_x': 0.25, 'center_y': 0.55}
+            Image:
+                source: root.play_img
+        RoundCard:
+            pos_hint: {'center_x': 0.75, 'center_y': 0.55}
+            Image:
+                source: 'images/wrong.png'
+        MDIconButton:
+            on_press: root.bt_redo()
+            icon: 'redo'
+            theme_text_color: 'Custom'
+            text_color: get_color_from_hex('e65100')
+            user_font_size: '50sp'
+            pos_hint: {'center_x': 0.25, 'center_y': 0.12}
+        ContinueButton:
+            on_press: root.bt_continue()
+            pos_hint: {'center_x': 0.75, 'center_y': 0.12}
+
+<FinalScreen>:
+    MDIconButton:
+        on_press: app.stop()
+        icon: 'exit-to-app'
+        user_font_size: "40sp"
+        pos_hint: {'center_x': 0.9, 'center_y': 0.95}
+    PlayLayout:
+        MDCard:
+            border_radius: 10
+            radius: [10,]
+            md_bg_color: 1, 1, 1, 1
+            line_color: get_color_from_hex('0d47a1')
+            size_hint: (0.8, 0.6)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+            MDLabel:
+                text: 'Parabéns!'
+                color: get_color_from_hex('1b5e20')
+                font_name: 'Comic Neue'
+                bold: True
+                font_size: '35dp'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+            Image:
+                source: 'images/win.png'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            MDLabel:
+                text: f'{root.score} / {root.no_rounds}'
+                color: get_color_from_hex('1b5e20')
+                font_name: 'Comic Neue'
+                bold: True
+                font_size: '35dp'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+        MenuButton:
+            on_press: root.bt_new_game()
+            icon: 'gamepad-variant'
+            icon_color: get_color_from_hex('629c44')
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+            text: 'Novo Jogo'
+            text_color: get_color_from_hex('629c44')
+            line_width: 3

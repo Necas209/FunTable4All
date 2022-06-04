@@ -126,7 +126,7 @@
 <PlayScreen>:
     PlayLayout:
         RoundLabel:
-            text: f'{root.round_no} / {root.no_rounds}'
+            text: f'{root.round_no} / {len(root.numbers)}'
         MDCard:
             border_radius: 10
             radius: [10,]
@@ -136,14 +136,6 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.55}
             Image:
                 source: root.play_img
-            MDIconButton:
-                pos_hint: {'center_x': 0.2, 'center_y': 0.2}
-                icon: 'check-circle'
-                on_press: root.bt_check_play(True)
-            MDIconButton:
-                pos_hint: {'center_x': 0.8, 'center_y': 0.2}
-                icon: 'close-circle'
-                on_press: root.bt_check_play(False)
 
 <ContinueButton@MDIconButton>:
     icon: 'chevron-right-circle'
@@ -154,7 +146,7 @@
 <RightScreen>:
     PlayLayout:
         RoundLabel:
-            text: f'{root.round_no} / {root.no_rounds}'
+            text: f'{root.round_no} / {len(root.numbers)}'
         MDCard:
             border_radius: 10
             radius: [10,]
@@ -176,7 +168,7 @@
 <WrongScreen>:
     PlayLayout:
         RoundLabel:
-            text: f'{root.round_no} / {root.no_rounds}'
+            text: f'{root.round_no} / {len(root.numbers)}'
         MDCard:
             border_radius: 10
             radius: [10,]

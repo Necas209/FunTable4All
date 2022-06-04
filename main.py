@@ -12,6 +12,9 @@ class GameApp(MDApp):
     no_rounds = NumericProperty(5)
     score = NumericProperty(0)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def build(self):
         Config.set('input', 'fun_table', 'tuio,127.0.0.1:3333')
         self.icon = 'images/app_logo.png'

@@ -1,5 +1,9 @@
+import random
+
+from kivy.core.window import Window
 from kivy.input import MotionEvent
-from kivy.properties import NumericProperty, StringProperty
+from kivy.input.providers.tuio import Tuio2dObjMotionEvent
+from kivy.properties import NumericProperty, StringProperty, ListProperty
 from kivy.uix.screenmanager import Screen
 
 
@@ -27,69 +31,75 @@ class MenuScreen(GoBackScreen):
 
 class ModesScreen(GoBackScreen):
     def bt_numbers(self):
+        no_rounds = 5
+        numbers = random.sample(range(1, 10), no_rounds)  # Should be 11
         play_sc = PlayScreen(name='play_sc1')
-        play_sc.play_img = 'images/numbers/number1.png'
+        play_sc.numbers = numbers
         self.manager.add_widget(play_sc)
         self.manager.current = 'play_sc1'
 
 
 def bind_screens(screen: BaseScreen, sc_name: str) -> None:
     screen.bind(score=screen.manager.get_screen(sc_name).setter('score'))
-    if 'final_sc' not in sc_name:
+    if sc_name != 'final_sc':
         screen.bind(round_no=screen.manager.get_screen(sc_name).setter('round_no'))
-    screen.bind(no_rounds=screen.manager.get_screen(sc_name).setter('no_rounds'))
-    for prop in ['score', 'round_no', 'no_rounds']:
+        screen.bind(numbers=screen.manager.get_screen(sc_name).setter('numbers'))
+    for prop in ['score', 'round_no', 'numbers']:
         screen.property(prop).dispatch(screen)
 
 
 class PlayScreen(BaseScreen):
+    event_counter = NumericProperty(0)
     play_img = StringProperty()
+    numbers = ListProperty()
     score = NumericProperty(0)
     round_no = NumericProperty(1)
-    no_rounds = NumericProperty(1)
 
-    def on_motion(self, etype: str, me: MotionEvent):
-        print(me.type_id, me.profile)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Window.bind(on_motion=self.on_motion)
+
+    def on_motion(self, window: Window, etype: str, me: MotionEvent):
+        if isinstance(me, Tuio2dObjMotionEvent) and self.event_counter == 0:
+            self.event_counter += 1
+            check_sc_name = f'check_sc{self.round_no}'
+            number: int = self.numbers[self.round_no - 1]
+            if number == me.fid:
+                self.score = self.score + 1
+                check_sc = RightScreen(name=check_sc_name)
+            else:
+                check_sc = WrongScreen(name=check_sc_name)
+            self.manager.add_widget(check_sc)
+            bind_screens(self, check_sc_name)
+            self.manager.current = check_sc_name
 
     def on_enter(self, *args):
+        self.play_img = f'images/numbers/number{self.numbers[self.round_no - 1]}.png'
         if issubclass(type(self.manager.previous()), CheckScreen):
             self.manager.remove_widget(self.manager.previous())
-
-    def bt_check_play(self, result):
-        check_sc_name = f'check_sc{self.round_no}'
-        if result:
-            self.score = self.score + 1
-            check_sc = RightScreen(name=check_sc_name)
-        else:
-            check_sc = WrongScreen(name=check_sc_name)
-        self.manager.add_widget(check_sc)
-        self.bind(play_img=self.manager.get_screen(check_sc_name).setter('play_img'))
-        self.property('play_img').dispatch(self)
-        bind_screens(self, check_sc_name)
-        self.manager.current = check_sc_name
 
 
 class CheckScreen(BaseScreen):
     play_img = StringProperty()
+    numbers = ListProperty()
     score = NumericProperty(0)
     round_no = NumericProperty(1)
-    no_rounds = NumericProperty(5)
+
+    def on_enter(self, *args):
+        self.play_img = f'images/numbers/number{self.numbers[self.round_no - 1]}.png'
 
     def bt_continue(self):
-        if self.round_no == self.no_rounds:
-            final_sc_name = 'final_sc'
-            final_sc = FinalScreen(name=final_sc_name)
-            self.manager.add_widget(final_sc)
-            bind_screens(self, final_sc_name)
-            self.manager.current = final_sc_name
+        if self.round_no == len(self.numbers):
+            sc_name = 'final_sc'
+            next_sc = FinalScreen(name=sc_name)
+            next_sc.no_rounds = len(self.numbers)
         else:
             self.round_no = self.round_no + 1
-            play_sc_name = f'play_sc{self.round_no}'
-            play_sc = PlayScreen(name=play_sc_name)
-            self.manager.add_widget(play_sc)
-            bind_screens(self, play_sc_name)
-            play_sc.play_img = f'images/numbers/number{self.round_no}.png'
-            self.manager.current = play_sc_name
+            sc_name = f'play_sc{self.round_no}'
+            next_sc = PlayScreen(name=sc_name)
+        self.manager.add_widget(next_sc)
+        bind_screens(self, sc_name)
+        self.manager.current = sc_name
 
 
 class RightScreen(CheckScreen):
@@ -98,7 +108,10 @@ class RightScreen(CheckScreen):
 
 class WrongScreen(CheckScreen):
     def bt_redo(self):
-        self.manager.current = f'play_sc{self.round_no}'
+        play_sc_name = f'play_sc{self.round_no}'
+        play_sc: PlayScreen = self.manager.get_screen(play_sc_name)
+        play_sc.event_counter = 0
+        self.manager.current = play_sc_name
         self.manager.remove_widget(self)
 
 

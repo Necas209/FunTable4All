@@ -1,7 +1,6 @@
 import random
 
 from kivy.core.window import Window
-from kivy.input import MotionEvent
 from kivy.input.providers.tuio import Tuio2dObjMotionEvent
 from kivy.properties import NumericProperty, StringProperty, ListProperty
 from kivy.uix.screenmanager import Screen
@@ -59,8 +58,10 @@ class PlayScreen(BaseScreen):
         super().__init__(**kwargs)
         Window.bind(on_motion=self.on_motion)
 
-    def on_motion(self, window: Window, etype: str, me: MotionEvent):
-        if isinstance(me, Tuio2dObjMotionEvent) and self.event_counter == 0:
+    # args = [window: Window, etype: str, me: MotionEvent]
+    def on_motion(self, *args):
+        if isinstance(args[-1], Tuio2dObjMotionEvent) and self.event_counter == 0:
+            me: Tuio2dObjMotionEvent = args[-1]
             self.event_counter += 1
             check_sc_name = f'check_sc{self.round_no}'
             number: int = self.numbers[self.round_no - 1]

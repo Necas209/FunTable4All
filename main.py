@@ -1,6 +1,5 @@
 from kivy import Config
 from kivy.core.text import LabelBase
-from kivy.input.providers.tuio import TuioMotionEventProvider
 from kivy.properties import NumericProperty
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.app import MDApp
@@ -16,7 +15,7 @@ class GameApp(MDApp):
         super().__init__(**kwargs)
 
     def build(self):
-        Config.set('input', 'fun_table', 'tuio,127.0.0.1:3333')
+        Config.set('input', 'fun_table', 'tuio,192.168.191.149:3333')
         self.icon = 'images/app_logo.png'
         sm = ScreenManager()
         start_sc = StartScreen(name='start_sc')

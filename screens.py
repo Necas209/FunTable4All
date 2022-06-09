@@ -60,7 +60,8 @@ class PlayScreen(BaseScreen):
 
     # args = [window: Window, etype: str, me: MotionEvent]
     def on_motion(self, *args):
-        if isinstance(args[-1], Tuio2dObjMotionEvent) and self.event_counter == 0:
+        if isinstance(args[-1], Tuio2dObjMotionEvent) \
+                and self.event_counter == 0:
             me: Tuio2dObjMotionEvent = args[-1]
             self.event_counter += 1
             check_sc_name = f'check_sc{self.round_no}'

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Costa Medeiros"
+  given-names: "Diogo António"
+  orcid: "https://orcid.org/0000-0002-6975-7402"
+- family-names: "Afonso Chaves"
+  given-names: "Eduardo Manuel"
+- family-names: "Constãncio Rodrigues"
+  given-names: "João Henrique"
+- family-names: "Cunha da Silva"
+  given-names: "Pedro Miguel"
+- family-names: "Barros Pinto"
+  given-names: "Rui João"
+title: "FunTable4All"
+version: 1.0.1
+doi: https://doi.org/10.5281/zenodo.6615091
+date-released: 2023-06-25
+url: "https://github.com/Necas209/FunTable4All"
